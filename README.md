@@ -36,6 +36,12 @@ dotnet build .\Publisher\Publisher.csproj
 ### Docker Build
 
 In order to build and run the Publisher and Subscriber containers, you need a running RabbitMQ instance. 
+
+First create a network
+```bash
+docker network create microservice_net
+```
+
 For compatibility with the docker-compose files in this repository, you can use the following command to run a RabbitMQ container:
 
 ```bash
