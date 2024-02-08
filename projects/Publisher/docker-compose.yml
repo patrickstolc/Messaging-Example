@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  publisher:
+    tty: true               # equivalent for -t
+    stdin_open: true        # equivalent for -i
+    environment: 
+      - EASYNETQ_CONNECTION_STRING=host=rabbitmq;port=5672;virtualHost=/;username=guest;password=guest
+      - CLIENT_ID=Publisher1
+    build:
+      context: ../../
+      dockerfile: projects/Publisher/Dockerfile
+    networks:
+      - microservices_net
+
+networks:
+    microservices_net:
+        external: true

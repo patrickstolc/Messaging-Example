@@ -1,57 +1,57 @@
-# Standard .NET Project Layout
+# PubSub Example
 
 ## Overview
 
-This is a basic layout for .NET application projects. It's **`not an official standard defined by .NET team`**. However, it is a set of common historical and emerging project layout patterns in the .NET ecosystem. Some of these patterns are more popular than others. It's combining from https://gist.github.com/davidfowl/ed7564297c61fe9ab814 and https://github.com/golang-standards/project-layout
+This is a simple example of messaging using a Publisher and Subscriber patterns in .NET 7 using EasyNetQ. 
 
+## Technologies
 
-## .NET Directories
+- .NET 7, .NET 7 SDK
+- EasyNetQ
 
-## `/src`
+## Building and Running the Application
 
-Your main project to start coding.
+The application can be built and run using Docker or .NET 7 SDK. 
 
-See the [`/src`](src/README.md) directory for examples.
+### Prerequisites
 
-### `/build`
+1. Install [Docker](https://docs.docker.com/engine/install/)
+2. Install [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
+3. Clone this repository to your local machine
 
-Build customizations, packaging and CI
+### Local Build
 
-See the [`/build`](build/README.md) directory for examples.
+Build the console Subscriber app by running the following command in the terminal:
 
+```bash
+dotnet build .\Subscriber\Subscriber.csproj
+```
 
-### `/scripts`
+Build the console Publisher app by running the following command in the terminal:
 
-Scripts to perform various install, analysis, etc operations.
+```bash
+dotnet build .\Publisher\Publisher.csproj
+```
 
-These scripts can be combine with `Makefile` in the root level.
+### Docker Build
 
-See the [`/scripts`](scripts/README.md) directory for examples.
+In order to build and run the Publisher and Subscriber containers, you need a running RabbitMQ instance. 
+For compatibility with the docker-compose files in this repository, you can use the following command to run a RabbitMQ container:
 
-### `/deployments`
+```bash
+docker run -d --network microservices_net --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672
+```
+It will build and run a RabbitMQ container with the same hostname and network that the Publisher and Subscriber containers will use for connecting.
 
-IaaS, PaaS, system and container orchestration deployment configurations and templates (docker-compose, kubernetes/helm, mesos, terraform, bosh). Note that in some repos (especially apps deployed with kubernetes) this directory is called `/deploy`.
+Build and run the Subscriber container using docker-compose:
 
-### `/tests`
+```bash
+docker-compose -f projects/Subscriber/docker-compose.yml up -d
+```
+Build and run the Publisher container using docker-compose:
 
-Unit test and integration test of your projects. Feel free to structure the `/test` directory anyway you want. 
+```bash
+docker-compose -f projects/Publisher/docker-compose.yml run --rm publisher
+```
 
-See the [`/tests`](tests/README.md) directory for examples.
-
-## Other Directories
-
-### `/docs`
-
-Design and user documents
-
-See the [`/docs`](docs/README.md) directory for examples.
-
-### `/examples` (optional)
-
-Examples for your applications and/or public libraries.
-
-See the [`/examples`](examples/README.md) directory for examples.
-
-### `/packages`
-
-Contains NuGet packages
+Using the command above allows you to run the Publisher container with an interactive terminal, so you can send messages to any subscriber.

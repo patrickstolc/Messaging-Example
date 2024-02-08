@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  app:
+    environment: 
+      - EASYNETQ_CONNECTION_STRING=host=rabbitmq;port=5672;virtualHost=/;username=guest;password=guest
+      - CLIENT_ID=Subscriber1
+    build:
+      context: ../../
+      dockerfile: projects/Subscriber/Dockerfile
+    deploy:
+      replicas: 2
+    networks:
+      - microservices_net
+
+networks:
+    microservices_net:
+        external: true
