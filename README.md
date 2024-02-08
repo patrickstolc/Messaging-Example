@@ -39,7 +39,7 @@ In order to build and run the Publisher and Subscriber containers, you need a ru
 
 First create a network
 ```bash
-docker network create microservice_net
+docker network create microservices_net
 ```
 
 For compatibility with the docker-compose files in this repository, you can use the following command to run a RabbitMQ container:
