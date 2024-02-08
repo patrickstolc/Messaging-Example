@@ -39,7 +39,7 @@ In order to build and run the Publisher and Subscriber containers, you need a ru
 For compatibility with the docker-compose files in this repository, you can use the following command to run a RabbitMQ container:
 
 ```bash
-docker run -d --network microservices_net --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672
+docker run -d --network microservices_net --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672 rabbitmq:3.12-management
 ```
 It will build and run a RabbitMQ container with the same hostname and network that the Publisher and Subscriber containers will use for connecting.
 
